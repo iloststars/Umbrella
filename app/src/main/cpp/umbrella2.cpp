@@ -388,6 +388,68 @@ void getResolvingPower() {
 //    }
 //    return rect;
 //}
+/**
+ * 判断是否能读取
+ * @param addr
+ * @return
+ */
+bool isCanRead(long addr) {
+    static int pageSize = getpagesize();
+    unsigned char vec = 0;
+    unsigned long start = addr & (~(pageSize - 1));
+#if __aarch64__
+    register int64_t x8 asm("x8") = __NR_mincore;
+    register int64_t x0 asm("x0") = start;
+    register int64_t x1 asm("x1") = pageSize;
+    register int64_t x2 asm("x2") = (int64_t)&vec;
+
+    asm volatile("svc 0"
+    : "=r"(x0)
+    : "r"(x8),"0"(x0),"r"(x1),"r"(x2)
+    : "memory", "cc");
+
+#elif __arm__
+    register int64_t r7 asm("r7") = __NR_mincore;
+    register int64_t r0 asm("r0") = start;
+    register int64_t r1 asm("r1") = pageSize;
+    register int64_t r2 asm("r2") = (int64_t)&vec;
+
+    asm volatile("swi #0"
+    : "=r"(r0)
+    : "r"(r7),"0"(r0),"r"(r1),"r"(r2)
+    : "memory", "cc");
+
+#endif
+    return vec == 1;
+}
+/**
+ * 读取地址
+ * @param addr
+ * @param buf
+ * @param size
+ * @return
+ */
+size_t mem_read(long addr, void *buf, ssize_t size) {
+    if (isCanRead(addr)) {
+        memmove(buf, (void *) addr, size);
+        return size;
+    }
+    return -1;
+}
+
+long ReadLong(long addr) {
+    long value = 0;
+    //mem_read(addr, &value, sizeof(long));
+    mem_read(addr, &value, sizeof(long));
+    return value;
+}
+
+int ReadDword(long addr) {
+    int value = 0;
+    mem_read(addr, &value, sizeof(int));
+    //mem_safe_read(addr, &value, sizeof(int));
+    return value;
+}
 
 Rect CalMatrixMem(int X, int Y) {
     static Rect rect{};
