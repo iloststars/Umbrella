@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/coreFragment">
+
+    <fragment
+        android:id="@+id/coreFragment"
+        android:name="com.agoda.umbrella.fragment.CoreFragment"
+        tools:layout="@layout/fragment_core">
+        <action
+            android:id="@+id/action_coreFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_coreFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.agoda.umbrella.fragment.HelpFragment"
+        tools:layout="@layout/fragment_help">
+        <action
+            android:id="@+id/action_helpFragment_to_coreFragment"
+            app:destination="@id/coreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.agoda.umbrella.fragment.SettingFragment"
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_settingFragment_to_coreFragment"
+            app:destination="@id/coreFragment" />
+    </fragment>
+</navigation>

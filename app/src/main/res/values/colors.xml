@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorAccent">#5CD3B4</color>
+    <color name="colorPrimary">#1F2B3F</color>
+    <color name="colorPrimaryDark">@color/colorPrimary</color>
+    <color name="colorPrimaryRavel">#ffffff</color>
+    <color name="colorPrimaryRavel2">#ffffff</color>
+    <color name="mainTextColor">#202020</color>
+
+    <color name="black">#FF000000</color>
+    <color name="red">#D50000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray">#D0D0D0</color>
+    <color name="green">#64DD17</color>
+    <color name="blue">#2962FF</color>
+    <color name="stroke">#5CD3B4</color>
+    <color name="transparent">#00000000</color>
+    <color name="color_background">#D8344377</color>
+</resources>
